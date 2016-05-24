@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="store.mapper.MusicStoreMapper">
+
+<resultMap type="Music" id="resultMusic">
+	<id property="id" column="id"/>
+	<result property="name" column="name"/>
+	<result property="artist" column="ARTIST_NAME"/>
+	<result property="album" column="ALBUM_TITLE"/>
+	<result property="image" column="IMAGE"/>
+	<result property="agent" column="AGENT_NAME"/>
+</resultMap>
+
+<sql id="selectMusic">
+SELECT id,name,artist_name,album_title,image,agent_name
+FROM music_tb
+</sql>
+
+<select id="readById" parameterType="int" resultMap="resultMusic">
+<include refid="selectMusic"/>
+WHERE id = #{id}
+</select>
+
+<select id="readByName" parameterType="string" resultMap="resultMusic">
+<include refid="selectMusic"/>
+WHERE name like CONCAT('%',#{name},'%')
+</select>
+
+<select id="readAll" resultMap="resultMusic">
+<include refid="selectMusic"/>
+</select>
+
+</mapper>

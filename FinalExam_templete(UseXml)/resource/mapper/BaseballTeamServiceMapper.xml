@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="service.mapper.BaseballTeamServiceMapper">
+
+<resultMap type="BaseballTeam" id="resultTeam">
+	<id property="teamId" column="id"/>
+	<result property="name" column="name"/>
+	<result property="region" column="region"/>
+	<result property="manager" column="manager"/>
+	<result property="stadium" column="stadium"/>
+	<result property="logo" column="logo"/>
+</resultMap>
+
+<sql id="selectTeam">
+SELECT id, name, region, manager, stadium, logo
+FROM team_tb
+</sql>
+
+<select id="findTeam" parameterType="string" resultMap="resultTeam">
+<include refid="selectTeam"/>
+WHERE id = #{teamId}
+</select>
+
+<select id="findAllTeams" resultMap="resultTeam">
+<include refid="selectTeam"/>
+</select>
+
+<select id="findTradeTarget" parameterType="string" resultMap="resultTeam">
+<include refid="selectTeam"/>
+WHERE id != #{teamId}
+</select>
+
+</mapper>

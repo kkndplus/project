@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="service.mapper.BaseballPlayerServiceMapper">
+
+<resultMap type="Player" id="resultPlayer">
+	<id property="playerId" column="id"/>
+	<result property="name" column="name"/>
+	<result property="backNumber" column="backnumber"/>
+	<result property="position" column="position"/>
+	<result property="hitting" column="hitting"/>
+	<result property="teamId" column="teamid"/>
+	<result property="throwing" column="throw"/>
+</resultMap>
+
+<sql id="selectPlayer">
+SELECT id, name, backnumber, position, hitting, teamid, throw 
+FROM player_tb
+</sql>
+
+<select id="findPlayer" parameterType="string" resultMap="resultPlayer">
+<include refid="selectPlayer"/>
+WHERE id = #{playerId}
+</select>
+
+<select id="findPlayerByTeam" parameterType="string" resultMap="resultPlayer">
+<include refid="selectPlayer"/>
+WHERE teamid = #{teamId}
+</select>
+
+<select id="findAllPlayer" resultMap="resultPlayer">
+<include refid="selectPlayer"/>
+</select>
+
+<update id="updatePlayer" parameterType="Player">
+UPDATE player_tb
+SET teamid = #{teamId}
+WHERE id = #{playerId}
+</update>
+
+</mapper>
